@@ -52,7 +52,7 @@ resource "azurerm_network_security_rule" "adx_internal" {
 }
 
 resource "azurerm_network_security_rule" "adx_azure_lb_inbound" {
-  name                         = "${local.resource_name}-adx-internal"
+  name                         = "${local.resource_name}-adx-lb-inbound"
   resource_group_name          = azurerm_resource_group.adxtest.name
   network_security_group_name  = azurerm_network_security_group.adxtest.name
   protocol                     = "Tcp"

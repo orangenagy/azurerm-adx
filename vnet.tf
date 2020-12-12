@@ -10,6 +10,7 @@ resource "azurerm_subnet" "adx1" {
   resource_group_name  = azurerm_resource_group.adxtest.name
   virtual_network_name = azurerm_virtual_network.adxtest.name
   address_prefixes     = ["10.1.1.0/24"]
+  service_endpoints    = ["Microsoft.KeyVault"]
 }
 
 resource "azurerm_subnet" "adx2" {
@@ -17,6 +18,7 @@ resource "azurerm_subnet" "adx2" {
   resource_group_name  = azurerm_resource_group.adxtest.name
   virtual_network_name = azurerm_virtual_network.adxtest.name
   address_prefixes     = ["10.1.2.0/24"]
+  service_endpoints    = ["Microsoft.KeyVault"]
 }
 
 resource "azurerm_subnet" "adx3" {
@@ -24,6 +26,7 @@ resource "azurerm_subnet" "adx3" {
   resource_group_name  = azurerm_resource_group.adxtest.name
   virtual_network_name = azurerm_virtual_network.adxtest.name
   address_prefixes     = ["10.1.3.0/24"]
+  service_endpoints    = ["Microsoft.KeyVault"]
 }
 
 resource "azurerm_public_ip" "adx_data_management_endpoint" {

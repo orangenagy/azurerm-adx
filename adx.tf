@@ -32,4 +32,7 @@ resource "azurerm_kusto_cluster_customer_managed_key" "adxtest" {
   key_vault_id = azurerm_key_vault.adxtest.id
   key_name     = azurerm_key_vault_key.adxtest.name
   key_version  = azurerm_key_vault_key.adxtest.version
+  depends_on = [
+    azurerm_key_vault_access_policy.cluster,
+  ]
 }

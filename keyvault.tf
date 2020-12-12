@@ -7,6 +7,10 @@ resource "random_string" "random" {
   special = false
 }
 
+data "http" "myip" {
+  url = "http://ipv4.icanhazip.com"
+}
+
 resource "azurerm_key_vault" "adxtest" {
   name                = local.keyvault_name
   location            = azurerm_resource_group.adxtest.location
@@ -14,8 +18,23 @@ resource "azurerm_key_vault" "adxtest" {
   tenant_id           = data.azurerm_client_config.current.tenant_id
   sku_name            = "standard"
 
-  soft_delete_enabled      = true
-  purge_protection_enabled = true
+  soft_delete_enabled        = true
+  purge_protection_enabled   = true
+  soft_delete_retention_days = 7
+
+  network_acls {
+    bypass         = "AzureServices"
+    default_action = "Deny"
+    virtual_network_subnet_ids = [
+      azurerm_subnet.adx1.id,
+      azurerm_subnet.adx2.id,
+      azurerm_subnet.adx3.id
+    ]
+    ip_rules = [
+      "${chomp(data.http.myip.body)}/32"
+    ]
+  }
+
 }
 
 resource "azurerm_key_vault_access_policy" "cluster" {
